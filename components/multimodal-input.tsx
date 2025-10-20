@@ -19,7 +19,7 @@ import { useLocalStorage, useWindowSize } from 'usehooks-ts';
 
 import { sanitizeUIMessages } from '@/lib/utils';
 
-import { ArrowUpIcon, PaperclipIcon, StopIcon, GlobeIcon } from './icons';
+import { ArrowUpIcon, PaperclipIcon, StopIcon } from './icons';
 import { PreviewAttachment } from './preview-attachment';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
@@ -74,7 +74,7 @@ function PureMultimodalInput({
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { width } = useWindowSize();
-  const { state: deepResearchState } = useDeepResearch();
+  const { state: deepResearchState, addSource } = useDeepResearch();
 
 
   useEffect(() => {
@@ -82,6 +82,36 @@ function PureMultimodalInput({
       adjustHeight();
     }
   }, []);
+
+  // Auto-fetch Twitter sources when entering crypto-research mode and after user starts
+  useEffect(() => {
+    let aborted = false;
+    async function fetchTweets() {
+      if (searchMode !== 'crypto-research') return;
+      if (messages.length === 0) return;
+      try {
+        const userId = '370898188810035200';
+        const resp = await fetch(`/api/twitter/user-tweets?userId=${encodeURIComponent(userId)}&limit=20`);
+        if (!resp.ok) return;
+        const data = await resp.json();
+        if (!aborted && Array.isArray(data.tweets)) {
+          data.tweets.forEach((t: any, idx: number) => {
+            if (t.url) {
+              addSource({
+                url: t.url,
+                title: (t.text || 'Tweet').slice(0, 100),
+                relevance: 1 - Math.min(idx * 0.05, 0.9),
+              });
+            }
+          });
+        }
+      } catch {}
+    }
+    fetchTweets();
+    return () => {
+      aborted = true;
+    };
+  }, [searchMode, messages.length, addSource]);
 
   const adjustHeight = () => {
     if (textareaRef.current) {
@@ -242,22 +272,6 @@ function PureMultimodalInput({
       )}
 
       <div className="flex flex-col gap-2">
-        {searchMode === 'deep-research' && <DeepResearch
-          isActive={searchMode === 'deep-research'}
-          onToggle={() => {}}
-          isLoading={isLoading}
-          activity={deepResearchState.activity}
-          sources={deepResearchState.sources}
-          deepResearch={searchMode === 'deep-research'}
-        />}
-        {searchMode === 'crypto-research' && <CryptoResearch
-          isActive={searchMode === 'crypto-research'}
-          onToggle={() => {}}
-          isLoading={isLoading}
-          activity={deepResearchState.activity}
-          sources={deepResearchState.sources}
-        />}
-
         <Textarea
           ref={textareaRef}
           placeholder="Send a message..."

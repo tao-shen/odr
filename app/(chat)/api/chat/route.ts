@@ -46,11 +46,12 @@ type AllowedTools =
   | 'scrape'
   | 'analyzeCryptoProject'
   | 'getTwitterSentiment'
+  | 'getTweetsByUser'
   | 'getProjectTeam';
 
 
 const firecrawlTools: AllowedTools[] = ['search', 'extract', 'scrape'];
-const cryptoTools: AllowedTools[] = ['analyzeCryptoProject', 'getTwitterSentiment', 'getProjectTeam'];
+const cryptoTools: AllowedTools[] = ['analyzeCryptoProject', 'getTwitterSentiment', 'getProjectTeam', 'getTweetsByUser'];
 
 const allTools: AllowedTools[] = [...firecrawlTools, ...cryptoTools, 'deepResearch'];
 
@@ -688,6 +689,10 @@ export async function POST(request: Request) {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
+                    // Forward cookies so the API can authenticate the session
+                    ...(typeof (globalThis as any).headers === 'function'
+                      ? { cookie: ((globalThis as any).headers().get('cookie') ?? '') }
+                      : {}),
                   },
                   body: JSON.stringify({
                     projectName,
@@ -760,6 +765,53 @@ export async function POST(request: Request) {
                   error: `Twitter sentiment analysis failed: ${error.message}`,
                   success: false,
                 };
+              }
+            },
+          },
+          // Auto fetch tweets by default for crypto-research contexts can be triggered by the model prompt
+          getTweetsByUser: {
+            description:
+              'Fetch recent tweets for a given Twitter user ID and add them as sources.',
+            parameters: z.object({
+              userId: z.string().describe('Twitter user ID'),
+              limit: z.number().optional().describe('Max tweets to fetch (default 20)'),
+            }),
+            execute: async ({ userId, limit = 20 }) => {
+              try {
+                const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+                const response = await fetch(`${baseUrl}/api/twitter/user-tweets?userId=${encodeURIComponent(userId)}&limit=${limit}`, {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    ...(typeof (globalThis as any).headers === 'function'
+                      ? { cookie: ((globalThis as any).headers().get('cookie') ?? '') }
+                      : {}),
+                  },
+                });
+
+                if (!response.ok) {
+                  return { success: false, error: `Twitter fetch failed: ${response.statusText}` };
+                }
+
+                const result = await response.json();
+
+                // Push tweets into sources stream
+                if (Array.isArray(result.tweets)) {
+                  result.tweets.forEach((tw: any) => {
+                    dataStream.writeData({
+                      type: 'source-delta',
+                      content: {
+                        url: tw.url,
+                        title: tw.text?.slice(0, 100) || 'Tweet',
+                        description: tw.text || '',
+                      },
+                    });
+                  });
+                }
+
+                return { success: true, data: result };
+              } catch (error: any) {
+                return { success: false, error: error.message };
               }
             },
           },

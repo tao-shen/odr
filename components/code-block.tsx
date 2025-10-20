@@ -20,12 +20,21 @@ export function CodeBlock({
   children,
   ...props
 }: CodeBlockProps) {
+  // Hooks must be called unconditionally for linting and runtime safety
   const [output, setOutput] = useState<string | null>(null);
   const [pyodide, setPyodide] = useState<any>(null);
   const match = /language-(\w+)/.exec(className || '');
   const isPython = match && match[1] === 'python';
   const codeContent = String(children).replace(/\n$/, '');
   const [tab, setTab] = useState<'code' | 'run'>('code');
+
+  const isMermaid = !inline && typeof className === 'string' && className.includes('language-mermaid');
+  if (isMermaid) {
+    const code = String(children).trim();
+    // Lazy-load Mermaid component to avoid SSR issues
+    const Mermaid = require('./mermaid').Mermaid;
+    return <Mermaid code={code} />;
+  }
 
   if (!inline) {
     return (

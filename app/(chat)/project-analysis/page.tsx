@@ -33,26 +33,26 @@ export default async function ProjectAnalysisPage() {
         {
           id: generateUUID(),
           role: 'assistant',
-          content: `# 🚀 Welcome to the Crypto Research Platform
+          content: `# 🚀 Crypto Deep Research
 
-I am your AI analyst for deep research on cryptocurrency projects. I can help with:
+I am your AI analyst for deep research on cryptocurrency projects. This tool focuses specifically on crypto projects and will compile sources, Twitter insights, and structured reports.
 
-## 📊 What I can analyze
-- Project basics: token info, market cap, price performance
-- Team background: founders and core team
-- Investors: VCs, rounds, funding
-- Twitter intelligence: social sentiment, discussion volume, KOL viewpoints
-- Roadmap evaluation: milestones and progress
-- Product analysis: tech architecture, differentiation, innovation
-- Market sentiment: community feedback, user reviews, risk assessment
+## What I can analyze
+- Project basics: token info, positioning, market
+- Team background: founders and core members
+- Investors: firms, rounds, amounts (if public)
+- Twitter intelligence: activity, engagement, key announcements
+- Roadmap evaluation: milestones and progress (rendered with Mermaid timelines)
+- Product analysis: features, architecture, differentiation
+- Sentiment: community/media/KOL perspective
 
-## 🔍 How to use
+## How to use
 Tell me the project name or token symbol, for example:
 - "Analyze Ethereum (ETH)"
 - "Research Chainlink"
 - "Investigate Uniswap team background"
 
-I'll generate a comprehensive and objective research report for you.`,
+I'll generate a comprehensive, objective research report with sources.`,
         },
       ]}
       selectedModelId={selectedModelId}

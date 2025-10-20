@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { Bitcoin } from 'lucide-react';
 
 import { MessageIcon, VercelIcon } from './icons';
 
@@ -17,34 +18,13 @@ export const Overview = () => {
         <p className="flex flex-row justify-center gap-4 items-center">
           <VercelIcon size={32} />
           <span>+</span>
-          <MessageIcon size={32} />
+          <Bitcoin size={32} className="text-crypto-bitcoin" />
         </p>
         <p>
-          This is an{' '}
-          <Link
-            className="font-medium underline underline-offset-4"
-            href="https://github.com/vercel/ai-chatbot"
-            target="_blank"
-          >
-            open source
-          </Link>{' '}
-          chatbot template built with Next.js and the AI SDK by Vercel. It uses
-          the{' '}
-          <code className="rounded-md bg-muted px-1 py-0.5">streamText</code>{' '}
-          function in the server and the{' '}
-          <code className="rounded-md bg-muted px-1 py-0.5">useChat</code> hook
-          on the client to create a seamless chat experience.
+          This is a crypto deep research assistant focused on cryptocurrency projects. It collects sources, analyzes Twitter activity, renders Mermaid timelines, and produces structured, investable research outputs.
         </p>
         <p>
-          You can learn more about the AI SDK by visiting the{' '}
-          <Link
-            className="font-medium underline underline-offset-4"
-            href="https://sdk.vercel.ai/docs"
-            target="_blank"
-          >
-            docs
-          </Link>
-          .
+          Start by telling me a project name or ticker (e.g., &quot;Analyze ETH&quot;). I will fetch data, show a K-line chart first, summarize key insights, and list sources used.
         </p>
       </div>
     </motion.div>

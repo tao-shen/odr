@@ -1,12 +1,15 @@
 import type { Message } from 'ai';
 import type { ChatRequestOptions } from '@/lib/types';
 import { PreviewMessage, ThinkingMessage } from './message';
+import { Kline } from './kline';
 import { useScrollToBottom } from './use-scroll-to-bottom';
 import { Overview } from './overview';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { Vote } from '@/lib/db/schema';
 import equal from 'fast-deep-equal';
 import { toast } from 'sonner';
+import { CryptoResearch } from './crypto-research';
+import { useDeepResearch } from '@/lib/deep-research-context';
 
 interface MessagesProps {
   chatId: string;
@@ -34,6 +37,46 @@ function PureMessages({
 }: MessagesProps) {
   const [messagesContainerRef, messagesEndRef] =
     useScrollToBottom<HTMLDivElement>();
+  const { state: deepResearchState } = useDeepResearch();
+
+  // Extract crypto symbol from messages
+  const cryptoSymbol = useMemo(() => {
+    // Look for common crypto symbols in messages
+    const messageText = messages.map(m => m.content).join(' ').toUpperCase();
+    
+    // Common crypto symbols mapping
+    const symbolMap: Record<string, string> = {
+      'BTC': 'BINANCE:BTCUSDT',
+      'BITCOIN': 'BINANCE:BTCUSDT',
+      'ETH': 'BINANCE:ETHUSDT',
+      'ETHEREUM': 'BINANCE:ETHUSDT',
+      'SOL': 'BINANCE:SOLUSDT',
+      'SOLANA': 'BINANCE:SOLUSDT',
+      'BNB': 'BINANCE:BNBUSDT',
+      'XRP': 'BINANCE:XRPUSDT',
+      'RIPPLE': 'BINANCE:XRPUSDT',
+      'ADA': 'BINANCE:ADAUSDT',
+      'CARDANO': 'BINANCE:ADAUSDT',
+      'DOGE': 'BINANCE:DOGEUSDT',
+      'DOGECOIN': 'BINANCE:DOGEUSDT',
+      'MATIC': 'BINANCE:MATICUSDT',
+      'POLYGON': 'BINANCE:MATICUSDT',
+      'DOT': 'BINANCE:DOTUSDT',
+      'POLKADOT': 'BINANCE:DOTUSDT',
+      'AVAX': 'BINANCE:AVAXUSDT',
+      'AVALANCHE': 'BINANCE:AVAXUSDT',
+      'LINK': 'BINANCE:LINKUSDT',
+      'CHAINLINK': 'BINANCE:LINKUSDT',
+    };
+
+    for (const [key, value] of Object.entries(symbolMap)) {
+      if (messageText.includes(key)) {
+        return value;
+      }
+    }
+
+    return 'BINANCE:BTCUSDT'; // Default to Bitcoin
+  }, [messages]);
 
   // Handle rate limit error
   const handleError = async (error: any) => {
@@ -54,7 +97,21 @@ function PureMessages({
       ref={messagesContainerRef}
       className="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4"
     >
-      {/* {messages.length === 0 && <Overview />} */}
+      {messages.length === 0 && <Overview />}
+      {messages.length > 0 && (
+        <div className="px-2 md:px-4 space-y-4">
+          <Kline symbol={cryptoSymbol} />
+          {deepResearchState.sources.length > 0 && (
+            <CryptoResearch
+              isActive={true}
+              onToggle={() => {}}
+              isLoading={isLoading}
+              activity={deepResearchState.activity}
+              sources={deepResearchState.sources}
+            />
+          )}
+        </div>
+      )}
 
       {messages.map((message, index) => (
         <PreviewMessage

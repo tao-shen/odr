@@ -57,7 +57,8 @@ export const customModel = (apiIdentifier: string, forReasoning: boolean = false
 
   if (hasOpenRouterKey) {
     return wrapLanguageModel({
-      model: openrouter(modelId),
+      // Type cast to avoid mismatched provider versions during TS checks
+      model: openrouter(modelId) as any,
       middleware: customMiddleware,
     });
   }
@@ -70,7 +71,8 @@ export const customModel = (apiIdentifier: string, forReasoning: boolean = false
   console.log("Using model:", modelId);
 
   return wrapLanguageModel({
-    model,
+    // Type cast to avoid provider type mismatch due to nested deps
+    model: model as any,
     middleware: customMiddleware,
   });
 };
