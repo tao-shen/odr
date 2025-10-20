@@ -101,13 +101,13 @@ export function CryptoResearch({
       <Tabs defaultValue="overview" className="flex flex-col h-full">
         <TabsList className="w-full bg-muted/50">
           <TabsTrigger value="overview" className="flex-1 text-xs">
-            概览
+            Overview
           </TabsTrigger>
           <TabsTrigger value="activity" className="flex-1 text-xs">
-            分析进度
+            Activity
           </TabsTrigger>
           <TabsTrigger value="sources" className="flex-1 text-xs">
-            信息源
+            Sources
           </TabsTrigger>
         </TabsList>
 
@@ -117,7 +117,7 @@ export function CryptoResearch({
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm flex items-center gap-2">
                   <DollarSign className="w-4 h-4 text-crypto-bitcoin" />
-                  项目信息
+                  Project Info
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
@@ -128,7 +128,7 @@ export function CryptoResearch({
                 <p className="text-xs text-muted-foreground">{researchData.projectInfo.description}</p>
                 {researchData.projectInfo.price && (
                   <div className="flex items-center justify-between">
-                    <span className="text-xs">价格:</span>
+                    <span className="text-xs">Price:</span>
                     <span className={cn(
                       "text-xs font-mono",
                       researchData.projectInfo.change24h && researchData.projectInfo.change24h > 0 
@@ -153,12 +153,12 @@ export function CryptoResearch({
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm flex items-center gap-2">
                   <Twitter className="w-4 h-4 text-blue-400" />
-                  推特情绪分析
+                  Twitter Sentiment
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs">情绪评分:</span>
+                  <span className="text-xs">Sentiment Score:</span>
                   <div className={cn("flex items-center gap-1", getSentimentColor(researchData.twitterSentiment.score))}>
                     {getSentimentIcon(researchData.twitterSentiment.score)}
                     <span className="text-xs font-mono">
@@ -168,7 +168,7 @@ export function CryptoResearch({
                 </div>
                 <div className="space-y-1">
                   <div className="flex justify-between text-xs">
-                    <span>正面情绪</span>
+                    <span>Positive</span>
                     <span>{(researchData.twitterSentiment.positiveRatio * 100).toFixed(0)}%</span>
                   </div>
                   <Progress 
@@ -177,7 +177,7 @@ export function CryptoResearch({
                   />
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  提及次数: {researchData.twitterSentiment.mentions}
+                  Mentions: {researchData.twitterSentiment.mentions}
                 </div>
               </CardContent>
             </Card>
@@ -188,7 +188,7 @@ export function CryptoResearch({
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm flex items-center gap-2">
                   <Users className="w-4 h-4 text-crypto-ethereum" />
-                  团队背景
+                  Team
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
