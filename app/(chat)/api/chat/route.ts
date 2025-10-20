@@ -50,10 +50,25 @@ type AllowedTools =
   | 'getProjectTeam';
 
 
-const firecrawlTools: AllowedTools[] = ['search', 'extract', 'scrape'];
 const cryptoTools: AllowedTools[] = ['analyzeCryptoProject', 'getTwitterSentiment', 'getProjectTeam', 'getTweetsByUser'];
 
-const allTools: AllowedTools[] = [...firecrawlTools, ...cryptoTools, 'deepResearch'];
+// Check individual Firecrawl tool switches
+const isSearchEnabled = process.env.ENABLE_FIRECRAWL_SEARCH !== 'false';
+const isExtractEnabled = process.env.ENABLE_FIRECRAWL_EXTRACT !== 'false';
+const isScrapeEnabled = process.env.ENABLE_FIRECRAWL_SCRAPE !== 'false';
+
+// Build firecrawl tools array based on enabled switches
+const firecrawlTools: AllowedTools[] = [
+  ...(isSearchEnabled ? ['search' as AllowedTools] : []),
+  ...(isExtractEnabled ? ['extract' as AllowedTools] : []),
+  ...(isScrapeEnabled ? ['scrape' as AllowedTools] : []),
+];
+
+const allTools: AllowedTools[] = [
+  ...firecrawlTools,
+  ...cryptoTools,
+  'deepResearch'
+];
 
 const app = new FirecrawlApp({
   apiKey: process.env.FIRECRAWL_API_KEY || '',
@@ -194,7 +209,11 @@ export async function POST(request: Request) {
         system: experimental_cryptoResearch ? cryptoResearchPrompt : systemPrompt,
         messages: coreMessages,
         maxSteps: 10,
-        experimental_activeTools: experimental_deepResearch ? allTools : experimental_cryptoResearch ? [...firecrawlTools, ...cryptoTools] : firecrawlTools,
+        experimental_activeTools: experimental_deepResearch 
+          ? allTools 
+          : experimental_cryptoResearch 
+            ? [...firecrawlTools, ...cryptoTools] 
+            : firecrawlTools,
         tools: {
           search: {
             description:
@@ -898,7 +917,7 @@ export async function POST(request: Request) {
 
               await saveMessages({
                 messages: responseMessagesWithoutIncompleteToolCalls.map(
-                  (message) => {
+                  (message, index) => {
                     const messageId = generateUUID();
 
                     if (message.role === 'assistant') {
@@ -907,12 +926,15 @@ export async function POST(request: Request) {
                       });
                     }
 
+                    // Use index-based timestamp to preserve order
+                    const timestamp = new Date(Date.now() + index);
+                    
                     return {
                       id: messageId,
                       chatId: id,
                       role: message.role,
                       content: message.content,
-                      createdAt: new Date(),
+                      createdAt: timestamp,
                     };
                   },
                 ),

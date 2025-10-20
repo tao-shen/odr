@@ -21,9 +21,9 @@ export const Overview = () => {
         <p>
           This is a crypto deep research assistant focused on cryptocurrency projects. It collects sources, analyzes Twitter activity, renders Mermaid timelines, and produces structured, investable research outputs.
         </p>
-        <p>
+        {/* <p>
           Start by telling me a project name or ticker (e.g., &quot;Analyze ETH&quot;). I will fetch data, show a K-line chart first, summarize key insights, and list sources used.
-        </p>
+        </p> */}
       </div>
     </motion.div>
   );

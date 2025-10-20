@@ -200,6 +200,7 @@ const PurePreviewMessage = ({
               </div>
             )}
 
+            {/* Show content (report) first, before tool invocations */}
             {message.content && mode === 'view' && (
               <div className="flex flex-row gap-2 items-start">
                 {message.role === 'user' && !isReadonly && (
@@ -244,6 +245,7 @@ const PurePreviewMessage = ({
               </div>
             )}
 
+            {/* Show tool invocations (sources) after content */}
             {message.toolInvocations && message.toolInvocations.length > 0 && (
               <div className="flex flex-col gap-4">
                 {message.toolInvocations.map((toolInvocation) => {
@@ -256,6 +258,7 @@ const PurePreviewMessage = ({
                       <div key={toolCallId}>
                         {toolName === 'search' ? (
                           <SearchResults
+                            query={args.query}
                             results={result.data.map((item: any) => ({
                               title: item.title,
                               url: item.url,

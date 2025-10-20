@@ -17,15 +17,24 @@ interface SuggestedActionsProps {
 function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
   const suggestedActions = [
     {
-      title: 'Research a topic',
-      label: 'deep dive with AI',
-      action:
-        'Perform deep research on this topic and provide a comprehensive analysis: ',
+      title: 'Analyze BNB',
+      label: 'comprehensive analysis',
+      action: 'Do a comprehensive analysis of BNB',
     },
     {
-      title: 'Compare and analyze',
-      label: 'multiple perspectives',
-      action: 'Research and analyze different viewpoints and evidence about: ',
+      title: 'Analyze Bitcoin',
+      label: 'comprehensive analysis',
+      action: 'Do a comprehensive analysis of Bitcoin',
+    },
+    {
+      title: 'Analyze Ethereum',
+      label: 'comprehensive analysis',
+      action: 'Do a comprehensive analysis of Ethereum',
+    },
+    {
+      title: 'Analyze Solana',
+      label: 'comprehensive analysis',
+      action: 'Do a comprehensive analysis of Solana',
     },
   ];
 

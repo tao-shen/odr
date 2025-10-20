@@ -18,6 +18,7 @@ interface SearchResult {
 interface SearchResultsProps {
   results: SearchResult[];
   title?: string;
+  query?: string;
   isLoading?: boolean;
 }
 
@@ -166,7 +167,8 @@ EarthIcon.displayName = 'EarthIcon';
 
 export function SearchResults({
   results,
-  title = 'Search Results...',
+  title,
+  query = '',
   isLoading = false,
 }: SearchResultsProps) {
   const earthIconRef = useRef<EarthIconHandle>(null);
@@ -178,6 +180,31 @@ export function SearchResults({
       earthIconRef.current.stopAnimation();
     }
   }, [isLoading]);
+
+  // Determine the title based on the query
+  const getTitle = () => {
+    if (title) return title;
+    
+    const lowerQuery = query.toLowerCase();
+    
+    // Check for Twitter search
+    if (lowerQuery.includes('site:twitter.com') || lowerQuery.includes('twitter')) {
+      return 'Twitter Search';
+    }
+    
+    // Check for official website search
+    if (lowerQuery.includes('official website') || lowerQuery.includes('official site')) {
+      return 'Official Website';
+    }
+    
+    // Check for general cryptocurrency search
+    if (lowerQuery.includes('cryptocurrency') || lowerQuery.includes('crypto')) {
+      return 'Web Search';
+    }
+    
+    // Default
+    return 'Sources';
+  };
 
   if (!results.length && !isLoading) return null;
 
@@ -192,7 +219,7 @@ export function SearchResults({
         ) : (
           <>
             <div className="flex items-center gap-2 mt-4 mb-2">
-              <span className="text-sm font-medium">Sources</span>
+              <span className="text-sm font-medium">{getTitle()}</span>
             </div>
             {results.map((result, i) => (
             <a
