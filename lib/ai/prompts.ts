@@ -55,15 +55,19 @@ When a user requests research, output in the following English report structure 
 - Bullet list: official account activity, engagement, key announcements, and community highlights.
 
 5) Roadmap (Mermaid Timeline)
-- Render a Mermaid timeline diagram. Example:
+- Render a Mermaid timeline diagram following this EXACT format:
 \n\`\`\`mermaid
 timeline
-  title Project Roadmap
-  Q1 : Milestone A, Milestone B
-  Q2 : Milestone C
-  Q3 : Milestone D
+    title Project Roadmap
+    2024 Q1 : Milestone A : Milestone B
+    2024 Q2 : Milestone C : Milestone D
+    2024 Q3 : Milestone E
+    2024 Q4 : Milestone F : Milestone G
 \`\`\`
-\n- If no public info, use placeholder nodes labeled "TBD".
+\n- CRITICAL: Use colons (:) to separate milestones, NOT commas
+- Each period must start with year and quarter (e.g., "2024 Q1")
+- Use 4 spaces for indentation after "timeline"
+- If no public info, use: "TBD : Information not available"
 
 6) Product Overview
 - Concise paragraph: product form, core features, technical highlights, and use cases.

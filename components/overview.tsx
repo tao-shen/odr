@@ -16,9 +16,7 @@ export const Overview = () => {
     >
       <div className="rounded-xl p-6 flex flex-col gap-8 leading-relaxed text-center max-w-xl">
         <p className="flex flex-row justify-center gap-4 items-center">
-          <VercelIcon size={32} />
-          <span>+</span>
-          <Bitcoin size={32} className="text-crypto-bitcoin" />
+          <Bitcoin size={48} className="text-crypto-bitcoin" />
         </p>
         <p>
           This is a crypto deep research assistant focused on cryptocurrency projects. It collects sources, analyzes Twitter activity, renders Mermaid timelines, and produces structured, investable research outputs.

@@ -75,84 +75,77 @@ export function CryptoResearch({
   sources = [],
   researchData
 }: CryptoResearchProps) {
-  // Always render panel; show empty states if no data yet
-
-  const getSentimentColor = (score: number) => {
-    if (score >= 0.6) return 'text-crypto-green';
-    if (score >= 0.4) return 'text-yellow-500';
-    return 'text-crypto-red';
-  };
-
-  const getSentimentIcon = (score: number) => {
-    if (score >= 0.6) return <TrendingUp className="w-4 h-4" />;
-    if (score >= 0.4) return <Target className="w-4 h-4" />;
-    return <TrendingDown className="w-4 h-4" />;
-  };
-
-  if (sources.length === 0) return null;
+  if (activity.length === 0 && sources.length === 0) {
+    return null;
+  }
 
   return (
-    <div className="w-full bg-card border border-crypto-gold/20 rounded-lg shadow-lg p-3 max-h-[600px] flex flex-col overflow-hidden backdrop-blur-sm">
-      <div className="flex items-center gap-2 mb-4">
-        <div className="w-2 h-2 bg-crypto-bitcoin rounded-full animate-pulse" />
-        <h3 className="text-lg font-semibold text-crypto-gold">Crypto Research</h3>
-      </div>
-
+    <div className="fixed right-4 top-20 w-80 bg-background border rounded-lg shadow-lg p-4 max-h-[80vh] flex flex-col overflow-hidden">
       <Tabs defaultValue="sources" className="flex flex-col h-full">
-        <TabsList className="w-full bg-muted/50">
-          <TabsTrigger value="sources" className="flex-1 text-xs">
+        <TabsList className="w-full">
+          <TabsTrigger value="activity" className="flex-1">
+            Activity
+          </TabsTrigger>
+          <TabsTrigger value="sources" className="flex-1">
             Sources
           </TabsTrigger>
         </TabsList>
 
-        {/* Overview and Activity tabs hidden as requested */}
+        <TabsContent value="activity" className="flex-1 overflow-y-auto mt-2">
+          <div className="space-y-4 pr-2">
+            {[...activity].reverse().map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-3"
+              >
+                <div
+                  className={cn(
+                    'size-2 rounded-full shrink-0',
+                    item.status === 'pending' && 'bg-yellow-500',
+                    item.status === 'complete' && 'bg-green-500',
+                    item.status === 'error' && 'bg-red-500',
+                  )}
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-foreground break-words whitespace-pre-wrap">
+                    {item.message}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {new Date(item.timestamp).toLocaleTimeString()}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </TabsContent>
 
-        <TabsContent value="sources" className="flex-1 overflow-y-auto mt-2 pr-1">
-          {sources.length === 0 ? (
-            <Card className="bg-card/50 border-crypto-gold/20">
-              <CardContent className="py-6 text-xs text-muted-foreground text-center">
-                No sources yet.
-              </CardContent>
-            </Card>
-          ) : (
-          <div className="space-y-3 pr-1">
+        <TabsContent value="sources" className="flex-1 overflow-y-auto mt-2">
+          <div className="space-y-4 pr-2">
             {sources.map((source, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-2 rounded-lg bg-muted/30 space-y-2"
+                className="flex flex-col gap-1"
               >
-                <div className="flex items-start gap-2">
-                  {source.type === 'twitter' && <Twitter className="w-3 h-3 text-blue-400 mt-0.5" />}
-                  {source.type === 'website' && <Globe className="w-3 h-3 text-crypto-ethereum mt-0.5" />}
-                  {source.type === 'whitepaper' && <CheckCircle className="w-3 h-3 text-crypto-gold mt-0.5" />}
-                  {source.type === 'news' && <AlertTriangle className="w-3 h-3 text-crypto-red mt-0.5" />}
-                  {!source.type && <Globe className="w-3 h-3 text-muted-foreground mt-0.5" />}
-                  
-                  <div className="flex-1 min-w-0">
-                    <a
-                      href={source.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs font-medium hover:underline break-words text-crypto-gold hover:text-crypto-bitcoin transition-colors"
-                    >
-                      {source.title}
-                    </a>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
+                <a
+                  href={source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium hover:underline break-words"
+                >
+                  {source.title}
+                </a>
+                <div className="flex items-center gap-2">
                   <div className="text-xs text-muted-foreground truncate">
                     {new URL(source.url).hostname}
                   </div>
-                  <Badge variant="outline" className="text-xs">
-                    {Math.round(source.relevance * 100)}%
-                  </Badge>
                 </div>
               </motion.div>
             ))}
           </div>
-          )}
         </TabsContent>
       </Tabs>
     </div>

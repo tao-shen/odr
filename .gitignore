@@ -33,6 +33,6 @@ yarn-error.log*
 .turbo
 
 .env
-.vercel
+# .vercel
 .vscode
 .env*.local

@@ -93,59 +93,53 @@ function PureMessages({
   };
 
   return (
-    <div
-      ref={messagesContainerRef}
-      className="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4"
-    >
-      {messages.length === 0 && <Overview />}
-      {messages.length > 0 && (
-        <div className="px-2 md:px-4 space-y-4">
-          <Kline symbol={cryptoSymbol} />
-          {deepResearchState.sources.length > 0 && (
-            <CryptoResearch
-              isActive={true}
-              onToggle={() => {}}
-              isLoading={isLoading}
-              activity={deepResearchState.activity}
-              sources={deepResearchState.sources}
-            />
-          )}
-        </div>
-      )}
-
-      {messages.map((message, index) => (
-        <PreviewMessage
-          key={message.id}
-          chatId={chatId}
-          message={message}
-          isLoading={isLoading && messages.length - 1 === index}
-          vote={
-            votes
-              ? votes.find((vote) => vote.messageId === message.id)
-              : undefined
-          }
-          setMessages={setMessages}
-          reload={async (options?: ChatRequestOptions) => {
-            try {
-              return await reload(options);
-            } catch (error) {
-              handleError(error);
-              return null;
-            }
-          }}
-          isReadonly={isReadonly}
-        />
-      ))}
-
-      {isLoading &&
-        messages.length > 0 &&
-        messages[messages.length - 1].role === 'user' && <ThinkingMessage />}
-
+    <>
       <div
-        ref={messagesEndRef}
-        className="shrink-0 min-w-[24px] min-h-[24px]"
-      />
-    </div>
+        ref={messagesContainerRef}
+        className="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4"
+      >
+        {messages.length === 0 && <Overview />}
+        {messages.length > 0 && (
+          <div className="px-2 md:px-4 space-y-4">
+            <Kline symbol={cryptoSymbol} />
+          </div>
+        )}
+
+        {messages.map((message, index) => (
+          <PreviewMessage
+            key={message.id}
+            chatId={chatId}
+            message={message}
+            isLoading={isLoading && messages.length - 1 === index}
+            vote={
+              votes
+                ? votes.find((vote) => vote.messageId === message.id)
+                : undefined
+            }
+            setMessages={setMessages}
+            reload={async (options?: ChatRequestOptions) => {
+              try {
+                return await reload(options);
+              } catch (error) {
+                handleError(error);
+                return null;
+              }
+            }}
+            isReadonly={isReadonly}
+          />
+        ))}
+
+        {isLoading &&
+          messages.length > 0 &&
+          messages[messages.length - 1].role === 'user' && <ThinkingMessage />}
+
+        <div
+          ref={messagesEndRef}
+          className="shrink-0 min-w-[24px] min-h-[24px]"
+        />
+      </div>
+
+    </>
   );
 }
 
