@@ -27,10 +27,11 @@ import { SuggestedActions } from './suggested-actions';
 import equal from 'fast-deep-equal';
 import { useDeepResearch } from '@/lib/deep-research-context';
 import { DeepResearch } from './deep-research';
-import { Telescope, Search } from 'lucide-react';
+import { CryptoResearch } from './crypto-research';
+import { Telescope, Search, Bitcoin } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs';
 
-type SearchMode = 'search' | 'deep-research';
+type SearchMode = 'search' | 'deep-research' | 'crypto-research';
 
 function PureMultimodalInput({
   chatId,
@@ -249,6 +250,13 @@ function PureMultimodalInput({
           sources={deepResearchState.sources}
           deepResearch={searchMode === 'deep-research'}
         />}
+        {searchMode === 'crypto-research' && <CryptoResearch
+          isActive={searchMode === 'crypto-research'}
+          onToggle={() => {}}
+          isLoading={isLoading}
+          activity={deepResearchState.activity}
+          sources={deepResearchState.sources}
+        />}
 
         <Textarea
           ref={textareaRef}
@@ -296,6 +304,14 @@ function PureMultimodalInput({
             >
               <Telescope size={14} />
               Deep Research
+            </TabsTrigger>
+            <TabsTrigger 
+              value="crypto-research"
+              className="rounded-full px-3 py-1.5 h-fit flex items-center gap-2 data-[state=inactive]:bg-transparent data-[state=active]:bg-crypto-bitcoin hover:bg-crypto-bitcoin/10 data-[state=active]:text-crypto-bitcoin border-0 data-[state=active]:shadow-none transition-colors"
+            >
+              <Bitcoin size={14} />
+              {/* 币圈分析 */}
+              Crypto Research
             </TabsTrigger>
           </TabsList>
         </Tabs>

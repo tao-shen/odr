@@ -69,6 +69,15 @@ const config: Config = {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+        // Crypto-specific colors
+        crypto: {
+          bitcoin: '#f7931a',
+          ethereum: '#627eea',
+          green: '#16a34a',
+          red: '#dc2626',
+          gold: '#fbbf24',
+          silver: '#94a3b8',
+        },
       },
     },
   },

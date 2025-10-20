@@ -67,7 +67,7 @@ export interface ConsoleOutput {
   contents: Array<ConsoleOutputContent>;
 }
 
-type SearchMode = "search" | "deep-research";
+type SearchMode = "search" | "deep-research" | "crypto-research";
 
 function PureBlock({
   chatId,

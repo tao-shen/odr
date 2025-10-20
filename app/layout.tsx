@@ -8,10 +8,10 @@ import { DeepResearchProvider } from '@/lib/deep-research-context';
 import './globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://extract.chat'),
-  title: 'Extract Chat - by Firecrawl',
+  metadataBase: new URL('https://crypto-research.chat'),
+  title: 'Crypto Deep Research - AI项目分析平台',
   description:
-    'Extract Chat allows you to extract information from any website with the help of an AI chatbot.',
+    'AI驱动的加密货币项目深度研究平台，提供项目分析、团队背景、投资人信息、推特情报和市场情绪分析。',
 };
 
 export const viewport = {
@@ -62,7 +62,7 @@ export default async function RootLayout({
       <body className="antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >

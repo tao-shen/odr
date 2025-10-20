@@ -35,8 +35,8 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                 }}
                 className="flex flex-row gap-3 items-center"
               >
-                <span className="text-lg font-semibold hover:bg-muted  rounded-md cursor-pointer">
-                  Deep Research
+                <span className="text-lg font-semibold hover:bg-muted rounded-md cursor-pointer text-crypto-gold">
+                  Crypto Research
                 </span>
               </Link>
               <Link
@@ -47,7 +47,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                 className="flex flex-row gap-3 items-center"
               >
                 <span className="text-sm text-muted-foreground leading-3">
-                  by Firecrawl 🔥
+                  AI币圈项目分析 ₿
                 </span>
               </Link>
             </div>
@@ -72,6 +72,18 @@ export function AppSidebar({ user }: { user: User | undefined }) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
+        <div className="px-2 pb-2">
+          <Link href="/project-analysis">
+            <Button 
+              variant="outline" 
+              className="w-full justify-start gap-2 bg-crypto-bitcoin/10 border-crypto-bitcoin/20 hover:bg-crypto-bitcoin/20 text-crypto-bitcoin"
+              onClick={() => setOpenMobile(false)}
+            >
+              <span className="text-sm">₿</span>
+              开始币圈项目分析
+            </Button>
+          </Link>
+        </div>
         <SidebarHistory user={user} />
       </SidebarContent>
       <SidebarFooter>{user && <SidebarUserNav user={user} />}</SidebarFooter>
