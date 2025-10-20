@@ -49,17 +49,7 @@ export function SidebarUserNav({ user }: { user: User }) {
               {`Toggle ${theme === 'light' ? 'dark' : 'light'} mode`}
             </DropdownMenuItem> */}
             {/* <DropdownMenuSeparator /> */}
-            <DropdownMenuItem asChild>
-              <button
-                type="button"
-                className="w-full cursor-pointer"
-                onClick={() => {
-                  window.open('https://firecrawl.dev', '_blank');
-                }}
-              >
-                Visit Firecrawl
-              </button>
-            </DropdownMenuItem>
+            {/** Firecrawl menu item hidden per request **/}
             <DropdownMenuItem asChild>
               <button
                 type="button"

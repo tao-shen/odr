@@ -292,25 +292,10 @@ function PureMultimodalInput({
         }}>
           <TabsList className="bg-transparent border rounded-full p-1 h-fit">
             <TabsTrigger 
-              value="search" 
-              className="rounded-full px-3 py-1.5 h-fit flex items-center gap-2 data-[state=inactive]:bg-transparent data-[state=active]:bg-orange-50 hover:bg-orange-50/50 data-[state=active]:text-orange-600 border-0 data-[state=active]:shadow-none transition-colors"
-            >
-              <Search size={14} />
-              Search
-            </TabsTrigger>
-            <TabsTrigger 
-              value="deep-research"
-              className="rounded-full px-3 py-1.5 h-fit flex items-center gap-2 data-[state=inactive]:bg-transparent data-[state=active]:bg-orange-50 hover:bg-orange-50/50 data-[state=active]:text-orange-600 border-0 data-[state=active]:shadow-none transition-colors"
-            >
-              <Telescope size={14} />
-              Deep Research
-            </TabsTrigger>
-            <TabsTrigger 
               value="crypto-research"
-              className="rounded-full px-3 py-1.5 h-fit flex items-center gap-2 data-[state=inactive]:bg-transparent data-[state=active]:bg-crypto-bitcoin hover:bg-crypto-bitcoin/10 data-[state=active]:text-crypto-bitcoin border-0 data-[state=active]:shadow-none transition-colors"
+              className="rounded-full px-3 py-1.5 h-fit flex items-center gap-2 data-[state=inactive]:bg-transparent data-[state=active]:bg-crypto-bitcoin hover:bg-crypto-bitcoin/10 data-[state=active]:text-white dark:data-[state=active]:text-zinc-900 border-0 data-[state=active]:shadow-none transition-colors"
             >
               <Bitcoin size={14} />
-              {/* 币圈分析 */}
               Crypto Research
             </TabsTrigger>
           </TabsList>

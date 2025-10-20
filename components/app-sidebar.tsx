@@ -39,17 +39,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                   Crypto Research
                 </span>
               </Link>
-              <Link
-                href="https://firecrawl.dev/"
-                onClick={() => {
-                  setOpenMobile(false);
-                }}
-                className="flex flex-row gap-3 items-center"
-              >
-                <span className="text-sm text-muted-foreground leading-3">
-                  AI币圈项目分析 ₿
-                </span>
-              </Link>
+              {/** Remove external Firecrawl tagline **/}
             </div>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -80,7 +70,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
               onClick={() => setOpenMobile(false)}
             >
               <span className="text-sm">₿</span>
-              开始币圈项目分析
+              Start Crypto Research
             </Button>
           </Link>
         </div>

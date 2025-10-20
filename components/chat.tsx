@@ -33,7 +33,7 @@ export function Chat({
   isReadonly: boolean;
 }) {
   const { mutate } = useSWRConfig();
-  const [searchMode, setSearchMode] = useState<'search' | 'deep-research' | 'crypto-research'>('search');
+  const [searchMode, setSearchMode] = useState<'search' | 'deep-research' | 'crypto-research'>('crypto-research');
 
   const {
     messages,
