@@ -432,6 +432,8 @@ const PureSpreadsheetEditor = ({
               >
                 <div className="flex items-center justify-between">
                   <Input
+                    id={`header-${i}`}
+                    name={`header-${i}`}
                     type="text"
                     value={header}
                     onChange={(e) => {
@@ -588,6 +590,8 @@ const PureSpreadsheetEditor = ({
                   editingCell?.col === colIndex ? (
                     <Input
                       ref={inputRef}
+                      id={`cell-${rowIndex}-${colIndex}`}
+                      name={`cell-${rowIndex}-${colIndex}`}
                       type="text"
                       value={editingCell.value}
                       onChange={(e) =>

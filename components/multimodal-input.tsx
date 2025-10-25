@@ -274,6 +274,8 @@ function PureMultimodalInput({
       <div className="flex flex-col gap-2">
         <Textarea
           ref={textareaRef}
+          id="chat-input"
+          name="message"
           placeholder="Send a message..."
           value={input}
           onChange={handleInput}
