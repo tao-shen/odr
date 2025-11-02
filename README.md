@@ -1,130 +1,328 @@
-# Open Deep Research
+# Crypto Deep Research Platform
 
-An Open-Source clone of Open AI's Deep Research experiment. Instead of using a fine-tuned version of o3, this method uses [Firecrawl's extract + search](https://firecrawl.dev/) with a reasoning model to deep research the web.
+An intelligent deep research platform focused on cryptocurrency projects, helping investors and researchers comprehensively understand the fundamentals, technical characteristics, market dynamics, and community sentiment of various cryptocurrencies.
 
-Check out the demo [here](https://x.com/nickscamara_/status/1886459999905521912)
+![Main Interface](longshot20251103002335.png)
 
-![Open Deep Research Hero](public/open-hero.png)
+## Overview
 
-## Features
+This platform leverages advanced AI reasoning models combined with real-time web data extraction to provide professional cryptocurrency project analysis reports. The system automatically collects information from multiple sources including official websites, technical documentation, social media activities, and market data, then generates structured investment research reports.
 
-- [Firecrawl](https://firecrawl.dev) Search + Extract
-  - Feed realtime data to the AI via search
-  - Extract structured data from multiple websites via extract
-- [Next.js](https://nextjs.org) App Router
-  - Advanced routing for seamless navigation and performance
-  - React Server Components (RSCs) and Server Actions for server-side rendering and increased performance
-- [AI SDK](https://sdk.vercel.ai/docs)
-  - Unified API for generating text, structured objects, and tool calls with LLMs
-  - Hooks for building dynamic chat and generative user interfaces
-  - Supports OpenAI (default), Anthropic, Cohere, and other model providers
-- [shadcn/ui](https://ui.shadcn.com)
-  - Styling with [Tailwind CSS](https://tailwindcss.com)
-  - Component primitives from [Radix UI](https://radix-ui.com) for accessibility and flexibility
-- Data Persistence
-  - [Vercel Postgres powered by Neon](https://vercel.com/storage/postgres) for saving chat history and user data
-  - [Vercel Blob](https://vercel.com/storage/blob) for efficient file storage
-- [NextAuth.js](https://github.com/nextauthjs/next-auth)
-  - Simple and secure authentication
+## Core Features
 
-## Model Providers
+### 📊 Comprehensive Project Analysis
 
-This template ships with OpenAI `gpt-4o` as the default. However, with the [AI SDK](https://sdk.vercel.ai/docs), you can switch LLM providers to [OpenAI](https://openai.com), [Anthropic](https://anthropic.com), [Cohere](https://cohere.com/), and [many more](https://sdk.vercel.ai/providers/ai-sdk-providers) with just a few lines of code.
+- **Project Overview**: Team background, technical architecture, core value proposition
+- **Investor Background**: Major investment institutions, funding history, token distribution
+- **Technical Assessment**: Underlying technology, consensus mechanism, performance metrics
+- **Product Ecosystem**: DeFi, NFT, DApp and other ecosystem applications
 
-This repo is compatible with [OpenRouter](https://openrouter.ai/) and [OpenAI](https://openai.com/). To use OpenRouter, you need to set the `OPENROUTER_API_KEY` environment variable.
+### 🔍 Multi-Dimensional Data Collection
 
-## Function Max Duration
+- **Information Source Integration**: Automatically crawls and verifies information from multiple authoritative channels
+  - Official documentation and whitepapers
+  - Wikipedia and technical encyclopedias
+  - Content platforms like Medium and YouTube
+  - Data platforms like CoinGecko and CoinMarketCap
+- **Real-time Data Updates**: Powered by [Firecrawl](https://firecrawl.dev) intelligent crawling technology
+- **Structured Extraction**: Automatically identifies and extracts key information points
 
-By default, the function timeout is set to 300 seconds (5 minutes). If you're using Vercel's Hobby tier, you'll need to reduce this to 60 seconds. You can adjust this by changing the `MAX_DURATION` environment variable in your `.env` file:
+### 📈 Social Media Sentiment Analysis
+
+- **Twitter Activity Monitoring**: Tracks official project accounts and community discussion heat
+- **Sentiment Scoring**: Analyzes positive, negative, and neutral community sentiment towards projects
+- **Key Event Tracking**: Identifies important announcements, partnerships, and market events
+- **Influence Analysis**: Evaluates community engagement and mention frequency
+
+### 🗺️ Visual Roadmap
+
+- **Mermaid Timeline**: Intuitively displays project development history and future plans
+- **Milestone Tracking**: Completed and upcoming important milestones
+- **Technical Upgrades**: Network upgrades, new feature releases, and other key dates
+
+### 📝 Structured Research Reports
+
+System-generated reports include:
+
+1. Project Summary
+2. Team and Investor Background
+3. Technical Architecture Analysis
+4. Products and Ecosystem
+5. Market Performance and Price Trends
+6. Community Sentiment and Discussion Topics
+7. Strengths and Risk Assessment
+8. Information Source List
+
+![Research Report Example](Weixin%20Image_20251020222200_712_1449.png)
+
+## Technology Stack
+
+### Frontend Framework
+
+- **[Next.js](https://nextjs.org)**: Modern web application built with App Router
+- **[shadcn/ui](https://ui.shadcn.com)**: Beautiful UI component library
+- **[Tailwind CSS](https://tailwindcss.com)**: Flexible styling system
+- **[Radix UI](https://radix-ui.com)**: Accessible component primitives
+
+### AI Capabilities
+
+- **[Vercel AI SDK](https://sdk.vercel.ai/docs)**: Unified API for AI model invocation
+- **Reasoning Model Support**:
+  - OpenAI (GPT-4o, o1, o3-mini)
+  - TogetherAI (DeepSeek-R1)
+  - Anthropic, Cohere, and more
+- **Structured Output**: Automatically generates JSON-formatted analysis results
+
+### Data Services
+
+- **[Firecrawl](https://firecrawl.dev)**: Intelligent web search and data extraction
+- **[Vercel Postgres](https://vercel.com/storage/postgres)**: Stores chat history and user data
+- **[Vercel Blob](https://vercel.com/storage/blob)**: File storage service
+- **[NextAuth.js](https://github.com/nextauthjs/next-auth)**: User authentication system
+
+## Supported Cryptocurrencies
+
+The platform currently supports in-depth analysis of the following major cryptocurrencies:
+
+- **Bitcoin (BTC)**: Bitcoin fundamentals and market analysis
+- **Ethereum (ETH)**: Ethereum ecosystem and technical upgrade tracking
+- **BNB**: Binance Smart Chain project analysis
+- **Solana (SOL)**: High-performance blockchain evaluation
+- **More Coins**: Supports custom analysis of any cryptocurrency project
+
+## Getting Started
+
+### Requirements
+
+- Node.js 18+
+- pnpm package manager
+- Database (PostgreSQL)
+
+### Running Locally
+
+1. **Clone the repository**
+
+```bash
+git clone <your-repo-url>
+cd odr
+```
+
+2. **Install dependencies**
+
+```bash
+pnpm install
+```
+
+3. **Configure environment variables**
+
+Copy `.env.example` to `.env` and fill in the required API keys:
+
+```bash
+# AI Model Configuration
+OPENAI_API_KEY=your_openai_key
+REASONING_MODEL=gpt-4o               
+deepseek-ai/DeepSeek-R1
+
+# Data Scraping Service
+FIRECRAWL_API_KEY=your_firecrawl_key
+
+# Database and Storage
+POSTGRES_URL=your_postgres_connection_string
+BLOB_READ_WRITE_TOKEN=your_blob_token
+
+# Authentication
+AUTH_SECRET=your_auth_secret
+
+# Optional Configuration
+BYPASS_JSON_VALIDATION=false  # Set to true when using non-OpenAI models
+MAX_DURATION=300              # Function timeout (seconds)
+```
+
+4. **Run database migrations**
+
+```bash
+pnpm db:migrate
+```
+
+5. **Start the development server**
+
+```bash
+pnpm dev
+```
+
+Visit [http://localhost:3000](http://localhost:3000) to start using the platform.
+
+### Deploy with One Click
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyour-username%2Fodr&env=AUTH_SECRET,OPENAI_API_KEY,FIRECRAWL_API_KEY,BLOB_READ_WRITE_TOKEN,POSTGRES_URL,REASONING_MODEL,MAX_DURATION&stores=[{%22type%22:%22postgres%22},{%22type%22:%22blob%22}])
+
+## Model Configuration
+
+### AI Model Providers
+
+The platform uses OpenAI's `gpt-4o` model by default, while supporting multiple other AI providers:
+
+- **[OpenAI](https://openai.com)**: GPT-4o, o1, o3-mini (native JSON Schema support)
+- **[OpenRouter](https://openrouter.ai/)**: Access to various open-source and closed-source models
+- **[TogetherAI](https://together.ai)**: DeepSeek-R1 and other open-source reasoning models
+- **[Anthropic](https://anthropic.com)**: Claude series models
+- **More Providers**: Supported via [AI SDK](https://sdk.vercel.ai/providers/ai-sdk-providers)
+
+### Reasoning Model Selection
+
+The reasoning model is used to generate structured research reports and can be configured via the `REASONING_MODEL` environment variable.
+
+**Recommended Configuration:**
+
+| Provider   | Model                       | Features                      | Configuration Requirements               |
+| ---------- | --------------------------- | ----------------------------- | ---------------------------------------- |
+| OpenAI     | `gpt-4o`                  | Fast, JSON Schema support     | Default configuration                    |
+| OpenAI     | `o1`, `o3-mini`         | Strong reasoning capabilities | Default configuration                    |
+| TogetherAI | `deepseek-ai/DeepSeek-R1` | Open-source, low cost         | Requires `BYPASS_JSON_VALIDATION=true` |
+
+**Important Notes:**
+
+- Non-OpenAI models require disabling JSON Schema validation
+- The reasoning model affects report quality and structure
+- Ensure the API key for your chosen model is properly configured
+
+### Function Timeout Configuration
+
+The default function timeout is 300 seconds (5 minutes), suitable for deep research tasks. If using Vercel's free tier, adjust to 60 seconds:
 
 ```bash
 MAX_DURATION=60
 ```
 
-Learn more about it [here](https://vercel.com/docs/functions/configuring-functions/duration#duration-limits)
+Learn more about [Vercel function duration limits](https://vercel.com/docs/functions/configuring-functions/duration#duration-limits)
 
-## Deploy Your Own
+## Usage Guide
 
-You can deploy your own version of the Next.js AI Chatbot to Vercel with one click:
+### Getting Started with Analysis
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnickscamara%2Fopen-deep-research&env=AUTH_SECRET,OPENAI_API_KEY,OPENROUTER_API_KEY,FIRECRAWL_API_KEY,BLOB_READ_WRITE_TOKEN,POSTGRES_URL,UPSTASH_REDIS_REST_URL,UPSTASH_REDIS_REST_TOKEN,REASONING_MODEL,BYPASS_JSON_VALIDATION,TOGETHER_API_KEY,MAX_DURATION&envDescription=Learn%20more%20about%20how%20to%20get%20the%20API%20Keys%20for%20the%20application&envLink=https%3A%2F%2Fgithub.com%2Fvercel%2Fai-chatbot%2Fblob%2Fmain%2F.env.example&demo-title=AI%20Chatbot&demo-description=An%20Open-Source%20AI%20Chatbot%20Template%20Built%20With%20Next.js%20and%20the%20AI%20SDK%20by%20Vercel.&demo-url=https%3A%2F%2Fchat.vercel.ai&stores=[{%22type%22:%22postgres%22},{%22type%22:%22blob%22}])
+1. **Select Preset Coins**: Click quick analysis buttons on the homepage (BTC, ETH, BNB, SOL)
+2. **Custom Query**: Enter any cryptocurrency project name in the input field
+3. **Wait for Generation**: AI automatically collects information and generates a complete report (approximately 2-5 minutes)
+4. **View Results**: Browse structured reports including charts, timelines, and information sources
 
-## Running locally
+### Report Content Overview
 
-You will need to use the environment variables [defined in `.env.example`](.env.example) to run Next.js AI Chatbot. It's recommended you use [Vercel Environment Variables](https://vercel.com/docs/projects/environment-variables) for this, but a `.env` file is all that is necessary.
+Generated research reports include the following modules:
 
-> Note: You should not commit your `.env` file or it will expose secrets that will allow others to control access to your various OpenAI and authentication provider accounts.
+#### 1. Price Chart
 
-1. Install Vercel CLI: `npm i -g vercel`
-2. Link local instance with Vercel and GitHub accounts (creates `.vercel` directory): `vercel link`
-3. Download your environment variables: `vercel env pull`
+- Real-time price data and price changes
+- Historical price trend visualization
 
-# 1. First install all dependencies
-```bash
-pnpm install
-```
+#### 2. Project Overview
 
-# 2. Then run database migrations
-```bash
-pnpm db:migrate
-```
+- Project introduction and core value
+- Technical features and innovations
+- Use cases and applications
 
-# 3. Run the app
-```bash
-pnpm dev
-```
+#### 3. Team and Investors
 
-Your app template should now be running on [localhost:3000](http://localhost:3000/).
+- Founding team background and experience
+- Core developer information
+- Investment institution list
+- Funding history
 
+#### 4. Technical Analysis
 
-# Models dependencies
+- Underlying architecture and consensus mechanism
+- Performance metrics (TPS, block time, etc.)
+- Technical advantages and challenges
 
-If you want to use a model other than the default, you will need to install the dependencies for that model.
+#### 5. Roadmap Timeline
 
+- Mermaid chart displaying development history
+- Important milestone annotations
+- Future planning preview
 
-TogetherAI's Deepseek:
-```bash
-pnpm add @ai-sdk/togetherai
-```
+#### 6. Community Sentiment
 
-Note: Maximum rate limit https://docs.together.ai/docs/rate-limits
+- Twitter activity analysis
+- Positive/negative/neutral sentiment distribution
+- Community discussion hot topics
 
-## Reasoning Model Configuration
+#### 7. Information Sources
 
-The application uses a separate model for reasoning tasks (like research analysis and structured outputs). This can be configured using the `REASONING_MODEL` environment variable.
+- All referenced web links
+- Official documentation and whitepapers
+- Third-party analysis articles
+- Video resources
 
-### Available Options
+### Best Practices
 
-| Provider | Models | Notes |
-|----------|--------|-------|
-| OpenAI | `gpt-4o`, `o1`, `o3-mini` | Native JSON schema support |
-| TogetherAI | `deepseek-ai/DeepSeek-R1` | Requires `BYPASS_JSON_VALIDATION=true` |
+- **Comparative Analysis**: Analyze multiple similar projects simultaneously for horizontal comparison
+- **Regular Updates**: Crypto markets change rapidly, recommend regenerating reports regularly
+- **Cross-Validation**: Conduct in-depth research using information source links in the report
+- **Risk Warning**: Reports are for reference only, investment decisions should consider personal risk tolerance
 
-### Important Notes
+## Technical Highlights
 
-- Only certain OpenAI models (gpt-4o, o1, o3-mini) natively support structured JSON outputs
-- Other models (deepseek-reasoner) can be used but may require disabling JSON schema validation
-- When using models that don't support JSON schema:
-  - Set `BYPASS_JSON_VALIDATION=true` in your .env file
-  - This allows non-OpenAI models to be used for reasoning tasks
-  - Note: Without JSON validation, the model responses may be less structured
-- The reasoning model is used for tasks that require structured thinking and analysis, such as:
-  - Research analysis
-  - Document suggestions
-  - Data extraction
-  - Structured responses
-- If no `REASONING_MODEL` is specified, it defaults to `o1-mini`
-- If an invalid model is specified, it will fall back to `o1-mini`
+### 🚀 High Performance
 
-### Usage
+- Concurrent data scraping for fast report generation
+- Caching mechanism to reduce redundant requests
+- Optimized database queries
 
-Add to your `.env` file:
-```bash
-# Choose one of: deepseek-reasoner, deepseek-ai/DeepSeek-R1
-REASONING_MODEL=deepseek-ai/DeepSeek-R1
+### 🔒 Security
 
-# Required when using models that don't support JSON schema (like deepseek-reasoner)
-BYPASS_JSON_VALIDATION=true
-```
+- NextAuth.js authentication protection
+- Secure API key storage
+- Encrypted user data
 
-The reasoning model is automatically used when the application needs structured outputs or complex analysis, regardless of which model the user has selected for general chat.
+### 📱 Responsive Design
+
+- Adapts to desktop, tablet, and mobile
+- Modern UI/UX design
+- Smooth interactive experience
+
+### 🔄 Real-time Updates
+
+- Automatically fetches latest information
+- Real-time price data synchronization
+- Social media activity tracking
+
+## FAQ
+
+**Q: Which cryptocurrencies are supported?**
+A: All major and niche cryptocurrency projects are supported. Simply enter the project name for analysis.
+
+**Q: How long does report generation take?**
+A: Typically 2-5 minutes, depending on network speed and the number of information sources.
+
+**Q: Are the data sources reliable?**
+A: The system collects information from multiple authoritative channels including official websites, Wikipedia, technical blogs, etc., and lists all sources at the end of the report for verification.
+
+**Q: Can I save historical reports?**
+A: Yes, all generated reports are saved in your account and can be viewed anytime in your history.
+
+**Q: How do I choose the right AI model?**
+A: OpenAI's `gpt-4o` or `o1` provide the best results. If cost-sensitive, choose `deepseek-ai/DeepSeek-R1`.
+
+## Contributing
+
+We welcome Issues and Pull Requests!
+
+1. Fork this repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details
+
+## Contact
+
+For questions or suggestions, please contact us via:
+
+- Submit a GitHub Issue
+- Email the project maintainers
+
+---
+
+**Disclaimer**: The analysis reports provided by this platform are for reference only and do not constitute investment advice. Cryptocurrency investment carries high risk. Please invest carefully.
